@@ -315,16 +315,22 @@ foldl2(_F, Acc, [], []) ->
     Acc.
 
 %% wrapper for math:log/1 to avoid dividing by zero
-math_log(0) ->
-    1;
 math_log(X) ->
-    math:log(X).
+    case X == 0 of
+	true ->
+	    1;
+	_ ->
+	    math:log(X)
+    end.
 
 %% wrapper for calculating inverse to avoid dividing by zero
-inverse(0) ->
-    0;
 inverse(X) ->
-    1/X.
+    case X == 0 of
+	true ->
+	    0;
+	_ ->
+	    1/X
+    end.
 
 get_hist_bins(Min, Max, StdDev, Count) ->
     BinWidth = get_bin_width(StdDev, Count),
